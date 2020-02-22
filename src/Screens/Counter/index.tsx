@@ -40,24 +40,64 @@ interface Props {
   initValue: number
 }
 
-const Counter = ({ title, initValue }: Props) => {
-  const [count, setCount] = useState<number>(0)
-  return (
-    <Container>
-      {title && (
-        <TitleContainer>
-          <TitleLabel>{title}</TitleLabel>
-        </TitleContainer>
-      )}
-      <CountContainer>
-        <CountLabel>{initValue + count} </CountLabel>
-      </CountContainer>
-      <ButtonContainer>
-        <Button iconName="plus" onPress={() => setCount(count + 1)} />
-        <Button iconName="minus" onPress={() => setCount(count - 1)} />
-      </ButtonContainer>
-    </Container>
-  )
+interface State {
+  count: number
+}
+
+// const Counter = ({ title, initValue }: Props) => {
+//   const [count, setCount] = useState<number>(0)
+//   return (
+//     <Container>
+//       {title && (
+//         <TitleContainer>
+//           <TitleLabel>{title}</TitleLabel>
+//         </TitleContainer>
+//       )}
+//       <CountContainer>
+//         <CountLabel>{initValue + count} </CountLabel>
+//       </CountContainer>
+//       <ButtonContainer>
+//         <Button iconName="plus" onPress={() => setCount(count + 1)} />
+//         <Button iconName="minus" onPress={() => setCount(count - 1)} />
+//       </ButtonContainer>
+//     </Container>
+//   )
+// }
+
+class Counter extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      count: props.initValue
+    }
+  }
+
+  render() {
+    const { count } = this.state
+    const { title, initValue } = this.props
+    return (
+      <Container>
+        {title && (
+          <TitleContainer>
+            <TitleLabel>{title}</TitleLabel>
+          </TitleContainer>
+        )}
+        <CountContainer>
+          <CountLabel>{initValue + count} </CountLabel>
+        </CountContainer>
+        <ButtonContainer>
+          <Button
+            iconName="plus"
+            onPress={() => this.setState({ count: count + 1 })}
+          />
+          <Button
+            iconName="minus"
+            onPress={() => this.setState({ count: count - 1 })}
+          />
+        </ButtonContainer>
+      </Container>
+    )
+  }
 }
 
 export default Counter
